@@ -1,0 +1,33 @@
+@startuml
+skinparam defaultTextAlignment center
+
+actor Admin as "Administrator"
+
+database GitHub as "GitHub
+tianocore-docs"
+
+database GitBook as "GitBook
+tianocore-docs"
+
+control Publish
+
+database Wiki as "TianoCore
+Wiki"
+
+actor Dev as "Developer"
+
+database Bugzilla as "TianoCore
+Bugzilla"
+
+[Admin] --d-> [GitHub]   : "Add\nRemove"
+[Admin] --d-> [GitBook]  : "Add\nRemove"
+[Admin] --d-> [Wiki]     : "Add\nRemove"
+
+[GitHub]  <-r-> [GitBook] : "GIT Repo Sync"
+[GitBook] <-r-- [Wiki]    : "Hyperlinks"
+[GitBook] <-d-> [Publish]
+
+[Dev]   <-u-> [GitHub]   : "Create\nClone\nEdit\nReview\nCommit"
+[Dev]   --u-> [Wiki]     : "Read"
+[Dev]   <-d-> [Bugzilla] : "Report\nAssign\nDiscuss\nResolve"
+@enduml
